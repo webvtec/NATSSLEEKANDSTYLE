@@ -213,7 +213,6 @@
     .upload-area p { margin: 0; font-size: 14px; color: var(--muted); font-family: 'DM Sans', sans-serif; }
     .upload-area strong { color: var(--emerald); }
 
-    #imagePreview { max-width: 200px; max-height: 200px; border-radius: 10px; margin: 10px auto; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
     #uploadProgress { display: none; margin-bottom: 12px; }
     #uploadProgress progress { width: 100%; height: 6px; border-radius: 3px; accent-color: var(--emerald); background: var(--dark2); }
 
@@ -518,26 +517,32 @@
 
     <!-- Gallery Management -->
     <div id="gallerySection" class="admin-container content-section">
-      <h2>Upload Photo</h2>
+      <h2>Upload Photos</h2>
 
       <div class="upload-area" id="uploadArea">
-        <input type="file" id="photoFileInput" accept="image/*" onchange="previewImage(event)"/>
+        <input type="file" id="photoFileInput" accept="image/*" multiple onchange="previewImages(event)"/>
         <div class="upload-icon">✦</div>
-        <p><strong>Tap to choose a photo</strong><br>or drag and drop here</p>
+        <p id="uploadAreaText"><strong>Tap to choose photos</strong><br><span style="color:var(--muted);font-size:12px;">Select multiple at once</span></p>
       </div>
 
-      <img id="imagePreview" alt="Preview"/>
-
-      <div id="uploadProgress">
-        <p style="font-size:13px; color:var(--muted); margin-bottom:4px;">Uploading...</p>
-        <progress id="progressBar" value="0" max="100"></progress>
+      <!-- Multi-file preview grid -->
+      <div id="multiPreviewGrid" style="display:none; margin-bottom:16px;">
+        <p style="font-size:12px; color:var(--muted); text-align:center; margin-bottom:10px;" id="selectedCountText"></p>
+        <div id="previewThumbs" style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;"></div>
       </div>
+
+      <!-- Per-file progress list -->
+      <div id="uploadProgressList" style="display:none; margin-bottom:14px;"></div>
+
+      <!-- Overall status -->
+      <div id="overallStatus" style="display:none; text-align:center; font-size:13px; color:var(--emerald); font-weight:700; margin-bottom:12px; padding:10px; background:rgba(45,155,110,0.08); border-radius:10px; border:1px solid rgba(45,155,110,0.15);"></div>
 
       <label for="photoCategorySelect">Select Category</label>
       <select id="photoCategorySelect">
         <option value="BRAIDS">BRAIDS</option>
         <option value="KNOTLESS">KNOTLESS</option>
         <option value="WEAVES & EXTENSIONS">WEAVES &amp; EXTENSIONS</option>
+        <option value="LACES WIGS">LACE WIGS</option>
         <option value="LASHES">LASHES</option>
         <option value="NATURAL STYLES">NATURAL STYLES</option>
         <option value="COLOUR">COLOUR</option>
@@ -545,7 +550,7 @@
         <option value="BEAUTY & GROOMING">BEAUTY &amp; GROOMING</option>
       </select>
 
-      <button onclick="uploadPhoto()" id="uploadBtn">Add Photo ✦</button>
+      <button onclick="uploadPhotos()" id="uploadBtn">Upload All Photos ✦</button>
 
       <div id="adminGallery"></div>
     </div>
@@ -674,62 +679,139 @@
         document.getElementById('timeInputs').style.display = isAllDay ? 'none' : 'block';
       }
 
-      // ===== DEVICE UPLOAD =====
-      function previewImage(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const preview = document.getElementById('imagePreview');
-        const reader = new FileReader();
-        reader.onload = (e) => { preview.src = e.target.result; preview.style.display = 'block'; };
-        reader.readAsDataURL(file);
-        document.getElementById('uploadArea').querySelector('p').innerHTML = `<strong>${file.name}</strong><br><span style="color:var(--muted);">Ready to upload</span>`;
+      // ===== MULTI-FILE UPLOAD =====
+      function previewImages(event) {
+        const files = Array.from(event.target.files);
+        if (!files.length) return;
+
+        const thumbsContainer = document.getElementById('previewThumbs');
+        const multiGrid = document.getElementById('multiPreviewGrid');
+        const countText = document.getElementById('selectedCountText');
+
+        thumbsContainer.innerHTML = '';
+        countText.textContent = `${files.length} photo${files.length > 1 ? 's' : ''} selected`;
+        multiGrid.style.display = 'block';
+
+        document.getElementById('uploadAreaText').innerHTML = `<strong>${files.length} photo${files.length > 1 ? 's' : ''} selected</strong><br><span style="color:var(--muted);font-size:12px;">Tap to change selection</span>`;
+        document.getElementById('overallStatus').style.display = 'none';
+        document.getElementById('uploadProgressList').style.display = 'none';
+
+        files.forEach((file, i) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const thumb = document.createElement('div');
+            thumb.style.cssText = 'position:relative; border-radius:8px; overflow:hidden; aspect-ratio:1; background:var(--onyx3);';
+            thumb.innerHTML = `
+              <img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; display:block;" alt="Preview ${i+1}"/>
+              <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.5);padding:3px 6px;font-size:10px;color:var(--mint);font-family:'DM Sans',sans-serif;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">${file.name}</div>
+            `;
+            thumbsContainer.appendChild(thumb);
+          };
+          reader.readAsDataURL(file);
+        });
       }
 
-      function uploadPhoto() {
+      async function uploadPhotos() {
         const fileInput = document.getElementById('photoFileInput');
-        const categorySelect = document.getElementById('photoCategorySelect');
-        const category = categorySelect.value.trim();
-        const file = fileInput.files[0];
-        if (!file) { alert('Please select a photo from your device first.'); return; }
+        const category = document.getElementById('photoCategorySelect').value.trim();
+        const files = Array.from(fileInput.files);
+
+        if (!files.length) { alert('Please select at least one photo first.'); return; }
         if (!category) { alert('Please select a category.'); return; }
+
         const uploadBtn = document.getElementById('uploadBtn');
-        uploadBtn.disabled = true; uploadBtn.textContent = 'Uploading...';
-        const progressDiv = document.getElementById('uploadProgress');
-        const progressBar = document.getElementById('progressBar');
-        progressDiv.style.display = 'block';
-        const timestamp = Date.now();
-        const ext = file.name.split('.').pop();
-        const fileName = `gallery/${timestamp}_${Math.random().toString(36).substring(2)}.${ext}`;
-        const storageRef = storage.ref(fileName);
-        const uploadTask = storageRef.put(file);
-        uploadTask.on('state_changed',
-          (snapshot) => { progressBar.value = (snapshot.bytesTransferred / snapshot.totalBytes) * 100; },
-          (error) => {
-            console.error("Upload error:", error);
-            alert('Upload failed: ' + error.message);
-            uploadBtn.disabled = false; uploadBtn.textContent = 'Add Photo ✦';
-            progressDiv.style.display = 'none';
-          },
-          () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-              return db.collection('gallery').add({ url: downloadURL, category: category, sortOrder: Date.now(), uploadedAt: firebase.firestore.FieldValue.serverTimestamp() });
-            }).then(() => {
-              showToast('✅ Photo uploaded successfully!');
-              fileInput.value = '';
-              document.getElementById('imagePreview').style.display = 'none';
-              document.getElementById('imagePreview').src = '';
-              progressDiv.style.display = 'none';
-              progressBar.value = 0;
-              uploadBtn.disabled = false; uploadBtn.textContent = 'Add Photo ✦';
-              document.getElementById('uploadArea').querySelector('p').innerHTML = '<strong>Tap to choose a photo</strong><br>or drag and drop here';
-            }).catch((error) => {
-              console.error("Firestore error:", error);
-              alert('Error saving photo reference: ' + error.message);
-              uploadBtn.disabled = false; uploadBtn.textContent = 'Add Photo ✦';
-              progressDiv.style.display = 'none';
-            });
-          }
-        );
+        const progressList = document.getElementById('uploadProgressList');
+        const overallStatus = document.getElementById('overallStatus');
+
+        uploadBtn.disabled = true;
+        uploadBtn.textContent = `Uploading 0 / ${files.length}...`;
+        progressList.innerHTML = '';
+        progressList.style.display = 'block';
+        overallStatus.style.display = 'none';
+
+        // Build a progress row for each file
+        files.forEach((file, i) => {
+          progressList.innerHTML += `
+            <div id="prog-row-${i}" style="margin-bottom:10px; padding:10px 12px; background:var(--onyx3); border-radius:10px; border:1px solid var(--glassborder);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:12px; color:var(--text); font-family:'DM Sans',sans-serif; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:70%;">${file.name}</span>
+                <span id="prog-label-${i}" style="font-size:11px; color:var(--muted); font-family:'DM Sans',sans-serif; white-space:nowrap;">Waiting...</span>
+              </div>
+              <progress id="prog-bar-${i}" value="0" max="100" style="width:100%; height:5px; border-radius:3px; accent-color:var(--emerald);"></progress>
+            </div>`;
+        });
+
+        let completed = 0;
+        let failed = 0;
+
+        const uploadFile = (file, index) => new Promise((resolve) => {
+          const label = document.getElementById(`prog-label-${index}`);
+          const bar = document.getElementById(`prog-bar-${index}`);
+          label.textContent = 'Uploading...';
+          label.style.color = 'var(--muted)';
+
+          const ext = file.name.split('.').pop();
+          const fileName = `gallery/${Date.now()}_${Math.random().toString(36).substring(2)}.${ext}`;
+          const uploadTask = storage.ref(fileName).put(file);
+
+          uploadTask.on('state_changed',
+            (snap) => {
+              const pct = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
+              bar.value = pct;
+              label.textContent = `${pct}%`;
+            },
+            (err) => {
+              label.textContent = '✕ Failed';
+              label.style.color = '#e74c3c';
+              bar.style.accentColor = '#e74c3c';
+              failed++;
+              resolve();
+            },
+            () => {
+              uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                return db.collection('gallery').add({ url, category, sortOrder: Date.now() + index, uploadedAt: firebase.firestore.FieldValue.serverTimestamp() });
+              }).then(() => {
+                label.textContent = '✓ Done';
+                label.style.color = 'var(--emerald)';
+                bar.value = 100;
+                completed++;
+                uploadBtn.textContent = `Uploading ${completed} / ${files.length}...`;
+                resolve();
+              }).catch(() => {
+                label.textContent = '✕ Save failed';
+                label.style.color = '#e74c3c';
+                failed++;
+                resolve();
+              });
+            }
+          );
+        });
+
+        // Upload all files in parallel
+        await Promise.all(files.map((file, i) => uploadFile(file, i)));
+
+        // Done
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = 'Upload All Photos ✦';
+
+        if (failed === 0) {
+          overallStatus.style.display = 'block';
+          overallStatus.textContent = `✅ All ${files.length} photo${files.length > 1 ? 's' : ''} uploaded successfully!`;
+          // Reset
+          fileInput.value = '';
+          document.getElementById('multiPreviewGrid').style.display = 'none';
+          document.getElementById('previewThumbs').innerHTML = '';
+          document.getElementById('uploadAreaText').innerHTML = '<strong>Tap to choose photos</strong><br><span style="color:var(--muted);font-size:12px;">Select multiple at once</span>';
+          setTimeout(() => { progressList.style.display = 'none'; overallStatus.style.display = 'none'; }, 3000);
+          showToast(`✅ ${completed} photo${completed > 1 ? 's' : ''} uploaded!`);
+        } else {
+          overallStatus.style.display = 'block';
+          overallStatus.style.color = '#e74c3c';
+          overallStatus.style.borderColor = 'rgba(231,76,60,0.3)';
+          overallStatus.style.background = 'rgba(231,76,60,0.06)';
+          overallStatus.textContent = `${completed} uploaded, ${failed} failed. Check the list above.`;
+          showToast(`⚠️ ${failed} photo${failed > 1 ? 's' : ''} failed to upload.`, false);
+        }
       }
 
       // ===== GALLERY LOAD =====
