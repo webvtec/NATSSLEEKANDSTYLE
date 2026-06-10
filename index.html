@@ -1388,7 +1388,10 @@ function loadGallery(containerId) {
       container.innerHTML = '<p style="text-align:center; margin-top:60px; color:var(--muted); font-size:15px;">No styles yet. Check back soon! ✦</p>';
       return;
     }
-    for (const cat in cats) {
+    // Defined display order — any unrecognised category appended at the end
+    const CATEGORY_ORDER = ['BRAIDS','KNOTLESS BRAIDS','LACE WIGS','WEAVES & EXTENSIONS','LASHES','NATURAL STYLES','SILK PRESS','COLOUR','BEAUTY & GROOMING'];
+    const orderedCats = [...CATEGORY_ORDER.filter(c => cats[c]), ...Object.keys(cats).filter(c => !CATEGORY_ORDER.includes(c))];
+    for (const cat of orderedCats) {
       const safeId = 'gc-' + cat.replace(/\s+/g, '-');
       container.innerHTML += `
         <div>
