@@ -1798,6 +1798,31 @@ function updateSummary() {
 }
 
 // ===== SUBMIT BOOKING =====
+// Booking numbers are the first 2 letters of the customer's name + 5 random
+// digits (e.g. "TE47383"), checked against existing bookings for uniqueness.
+async function generateBookingNumber(name) {
+  const words = (name || '').trim().split(/\s+/).filter(Boolean);
+  let prefix;
+  if (words.length >= 2) {
+    prefix = (words[0][0] + words[1][0]).toUpperCase();
+  } else if (words.length === 1) {
+    prefix = (words[0][0] + (words[0][1] || words[0][0])).toUpperCase();
+  } else {
+    prefix = 'XX';
+  }
+  for (let i = 0; i < 5; i++) {
+    const digits = Math.floor(10000 + Math.random() * 90000);
+    const candidate = prefix + digits;
+    try {
+      const existing = await db.collection('bookings').where('bookingNumber', '==', candidate).limit(1).get();
+      if (existing.empty) return candidate;
+    } catch (e) {
+      return candidate;
+    }
+  }
+  return prefix + Date.now().toString().slice(-5);
+}
+
 async function submitBooking(e) {
   e.preventDefault();
   const user = firebase.auth().currentUser;
@@ -1835,13 +1860,7 @@ async function submitBooking(e) {
       return;
     }
 
-    const counterRef = db.collection('counters').doc('bookings');
-    const bookingNumber = await db.runTransaction(async t2 => {
-      const counter = await t2.get(counterRef);
-      const next = (counter.exists ? counter.data().count : 0) + 1;
-      t2.set(counterRef, { count: next });
-      return next;
-    });
+    const bookingNumber = await generateBookingNumber(name);
 
     const [dateY, dateM, dateD] = date.split('-').map(Number);
     const displayDate = new Date(dateY, dateM-1, dateD).toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
