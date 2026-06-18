@@ -48,11 +48,11 @@
 
 <style>
 :root {
-  --emerald:   #2D9B6E;
-  --emerald2:  #1F7A54;
-  --emerald3:  #165F3D;
-  --mint:      #A8E6CF;
-  --mint2:     #D4F5E4;
+  --emerald:   #D4AF37;
+  --emerald2:  #B8902E;
+  --emerald3:  #8C6D1F;
+  --mint:      #E6C875;
+  --mint2:     #F5E6C0;
   --champagne: #D4A76A;
   --champagne2:#B8894E;
   --onyx:      #0A0A0A;
@@ -60,7 +60,7 @@
   --onyx3:     #1C1C1C;
   --dark2:     #222222;
   --muted:     #7A8B82;
-  --line:      rgba(45,155,110,0.12);
+  --line:      rgba(212,175,55,0.12);
   --white:     #ffffff;
   --text:      #E2E2E2;
   --textdim:   #9A9A9A;
@@ -129,7 +129,7 @@ body {
   text-decoration: none;
   transition: all 0.25s;
 }
-.top-icon-btn:hover { background: rgba(45,155,110,0.15); border-color: var(--emerald); }
+.top-icon-btn:hover { background: rgba(212,175,55,0.15); border-color: var(--emerald); }
 
 #authTopBtn {
   font-family: 'DM Sans', sans-serif;
@@ -141,7 +141,7 @@ body {
   height: 32px;
   border-radius: 20px;
   background: transparent;
-  border: 1px solid rgba(45,155,110,0.4);
+  border: 1px solid rgba(212,175,55,0.4);
   color: var(--mint);
   cursor: pointer;
   transition: all 0.25s;
@@ -280,11 +280,11 @@ body {
   border-radius: 40px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(45,155,110,0.3);
+  box-shadow: 0 6px 24px rgba(212,175,55,0.3);
   transition: all 0.3s;
   text-decoration: none;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,155,110,0.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212,175,55,0.4); }
 
 .btn-secondary {
   display: inline-flex;
@@ -376,7 +376,7 @@ body {
 }
 .gallery-grid-new img:hover {
   transform: scale(1.03);
-  box-shadow: 0 8px 30px rgba(45,155,110,0.25);
+  box-shadow: 0 8px 30px rgba(212,175,55,0.25);
 }
 
 .book-look-strip {
@@ -460,7 +460,7 @@ body {
   width: 100%;
   padding: 13px 16px;
   background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(45,155,110,0.15);
+  border: 1px solid rgba(212,175,55,0.15);
   border-radius: 12px;
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
@@ -473,7 +473,7 @@ body {
 .field-input:focus, .field-select:focus {
   outline: none;
   border-color: var(--emerald);
-  box-shadow: 0 0 0 3px rgba(45,155,110,0.12);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
   background: rgba(255,255,255,0.06);
 }
 
@@ -492,18 +492,18 @@ body {
   border: none;
   border-radius: 14px;
   cursor: pointer;
-  box-shadow: 0 6px 24px rgba(45,155,110,0.3);
+  box-shadow: 0 6px 24px rgba(212,175,55,0.3);
   transition: all 0.3s;
   margin-top: 4px;
 }
-.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(45,155,110,0.4); }
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(212,175,55,0.4); }
 
 #selectionSummary {
   display: none;
   margin-top: 12px;
   padding: 14px;
-  background: rgba(45,155,110,0.06);
-  border: 1px solid rgba(45,155,110,0.15);
+  background: rgba(212,175,55,0.06);
+  border: 1px solid rgba(212,175,55,0.15);
   border-radius: 10px;
 }
 #selectionSummaryTitle {
@@ -519,7 +519,7 @@ body {
   margin-bottom: 12px;
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(45,155,110,0.15);
+  border: 1px solid rgba(212,175,55,0.15);
   background: var(--onyx2);
 }
 
@@ -540,7 +540,7 @@ body {
   height: 90px;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(45,155,110,0.15);
+  border: 1px solid rgba(212,175,55,0.15);
   background: rgba(255,255,255,0.04);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
@@ -551,7 +551,7 @@ body {
 .review-form-card textarea:focus {
   outline: none;
   border-color: var(--emerald);
-  box-shadow: 0 0 0 3px rgba(45,155,110,0.12);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
 }
 
 #starRating {
@@ -565,7 +565,7 @@ body {
 
 .review-card {
   background: var(--onyx2);
-  border: 1px solid rgba(45,155,110,0.08);
+  border: 1px solid rgba(212,175,55,0.08);
   border-left: 3px solid var(--emerald);
   border-radius: 14px;
   padding: 16px;
@@ -648,7 +648,7 @@ body {
   padding: 24px;
   border-top: 3px solid var(--emerald);
   box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-  border: 1px solid rgba(45,155,110,0.15);
+  border: 1px solid rgba(212,175,55,0.15);
   border-top: 3px solid var(--emerald);
 }
 
@@ -676,7 +676,7 @@ body {
 
 /* ===================== BOOKING CARD ===================== */
 .booking-card {
-  border: 1px solid rgba(45,155,110,0.1);
+  border: 1px solid rgba(212,175,55,0.1);
   border-left: 3px solid var(--champagne);
   border-radius: 12px;
   padding: 16px;
@@ -727,8 +727,8 @@ body {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
-.cut-item:hover, .addon-item:hover { background: rgba(45,155,110,0.07); }
-.cut-item.selected { background: rgba(45,155,110,0.1); border-left: 3px solid var(--emerald); }
+.cut-item:hover, .addon-item:hover { background: rgba(212,175,55,0.07); }
+.cut-item.selected { background: rgba(212,175,55,0.1); border-left: 3px solid var(--emerald); }
 .addon-item.selected { background: rgba(212,167,106,0.08); border-left: 3px solid var(--champagne); }
 .item-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
 .item-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text); }
@@ -765,8 +765,8 @@ body {
 /* ===================== INFO PROMPT ===================== */
 #reviewPrompt {
   display: none;
-  background: rgba(45,155,110,0.08);
-  border: 1px solid rgba(45,155,110,0.2);
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.2);
   border-radius: 12px;
   padding: 14px;
   text-align: center;
@@ -779,7 +779,7 @@ body {
 /* ===================== SCROLLBAR ===================== */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--onyx); }
-::-webkit-scrollbar-thumb { background: rgba(45,155,110,0.35); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.35); border-radius: 4px; }
 
 /* ===================== UTILITY ===================== */
 .text-center { text-align: center; }
@@ -801,7 +801,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-.tag-green { background: rgba(45,155,110,0.15); color: var(--emerald); }
+.tag-green { background: rgba(212,175,55,0.15); color: var(--emerald); }
 .tag-red { background: rgba(231,76,60,0.12); color: #e74c3c; }
 .tag-gold { background: rgba(212,167,106,0.15); color: var(--champagne); }
 </style>
@@ -967,7 +967,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
           <div id="selectionSummaryText"></div>
         </div>
 
-        <p id="estimateTimeMessage" style="display:none; font-size:12px; color:var(--muted); margin-top:8px; padding:10px 14px; background:rgba(45,155,110,0.06); border-radius:8px; border:1px solid rgba(45,155,110,0.12);"></p>
+        <p id="estimateTimeMessage" style="display:none; font-size:12px; color:var(--muted); margin-top:8px; padding:10px 14px; background:rgba(212,175,55,0.06); border-radius:8px; border:1px solid rgba(212,175,55,0.12);"></p>
 
         <button type="submit" class="submit-btn">Confirm Booking ✦</button>
       </form>
@@ -1042,23 +1042,23 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
     </div>
 
     <style>
-      .price-style-card { margin-bottom:10px; border-radius:6px; overflow:hidden; border:1px solid rgba(45,155,110,0.12); background:rgba(20,20,20,0.3); }
-      .price-style-head { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; cursor:pointer; user-select:none; background:rgba(45,155,110,0.05); transition:background 0.2s; }
-      .price-style-head:hover { background:rgba(45,155,110,0.1); }
+      .price-style-card { margin-bottom:10px; border-radius:6px; overflow:hidden; border:1px solid rgba(212,175,55,0.12); background:rgba(20,20,20,0.3); }
+      .price-style-head { display:flex; justify-content:space-between; align-items:center; padding:10px 14px; cursor:pointer; user-select:none; background:rgba(212,175,55,0.05); transition:background 0.2s; }
+      .price-style-head:hover { background:rgba(212,175,55,0.1); }
       .price-style-name { font-family:'Cormorant Garamond','DM Sans',serif; font-size:14px; font-weight:600; color:var(--text); letter-spacing:0.5px; }
       .price-style-name small { display:block; font-size:10px; font-weight:400; color:var(--muted); font-style:italic; margin-top:2px; }
       .price-style-from { font-size:12px; color:var(--champagne); font-weight:700; white-space:nowrap; font-family:'DM Sans',sans-serif; }
       .price-style-toggle { font-size:14px; color:var(--emerald); margin-left:8px; transition:transform 0.25s; }
       .price-style-card.open .price-style-toggle { transform:rotate(180deg); }
-      .price-style-body { display:none; padding:8px 14px 12px; border-top:1px solid rgba(45,155,110,0.1); }
+      .price-style-body { display:none; padding:8px 14px 12px; border-top:1px solid rgba(212,175,55,0.1); }
       .price-style-card.open .price-style-body { display:block; }
       .price-size-title { margin-top:8px; margin-bottom:4px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--emerald); }
       .price-size-title:first-child { margin-top:0; }
-      .price-row-inner { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid rgba(45,155,110,0.06); }
+      .price-row-inner { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid rgba(212,175,55,0.06); }
       .price-row-inner:last-child { border-bottom:none; }
       .price-row-inner .label { font-size:13px; color:var(--text); }
       .price-row-inner .amt { font-size:13px; color:var(--champagne); font-weight:700; white-space:nowrap; }
-      .price-group-divider { margin:14px 0 8px; padding:6px 10px; border-radius:3px; background:rgba(45,155,110,0.08); border-left:3px solid var(--emerald); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
+      .price-group-divider { margin:14px 0 8px; padding:6px 10px; border-radius:3px; background:rgba(212,175,55,0.08); border-left:3px solid var(--emerald); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text); }
       .price-group-divider:first-child { margin-top:4px; }
     </style>
 
@@ -1192,7 +1192,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
             html += `</div></div>`;
           });
         });
-        html += `<div style="margin-top:14px;padding-top:10px;border-top:1px solid rgba(45,155,110,0.1);"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--emerald);margin-bottom:6px;">Optional Extra</div><div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="font-size:13px;color:var(--text);">Custom Design / Accessories</span><span style="font-size:13px;color:var(--champagne);font-weight:700;white-space:nowrap;">$500+</span></div></div>`;
+        html += `<div style="margin-top:14px;padding-top:10px;border-top:1px solid rgba(212,175,55,0.1);"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--emerald);margin-bottom:6px;">Optional Extra</div><div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="font-size:13px;color:var(--text);">Custom Design / Accessories</span><span style="font-size:13px;color:var(--champagne);font-weight:700;white-space:nowrap;">$500+</span></div></div>`;
         container.innerHTML = html;
       })();
     </script>
@@ -1261,7 +1261,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
   <div class="modal-box">
     <button class="modal-close" onclick="closePaymentInfo()">×</button>
     <h3 class="modal-title">Payment Info</h3>
-    <div style="border:1px solid rgba(45,155,110,0.15); border-radius:12px; padding:16px; background:rgba(45,155,110,0.04); border-left:3px solid var(--emerald); color:var(--text);">
+    <div style="border:1px solid rgba(212,175,55,0.15); border-radius:12px; padding:16px; background:rgba(212,175,55,0.04); border-left:3px solid var(--emerald); color:var(--text);">
       <p style="margin:0; font-size:14px; text-align:center; font-style:italic;">Payment details coming soon. ✦</p>
     </div>
   </div>
@@ -1360,7 +1360,7 @@ function updateAuthButton(user) {
     btn.textContent = 'LOG IN';
     btn.style.background = 'transparent';
     btn.style.color = 'var(--mint)';
-    btn.style.borderColor = 'rgba(45,155,110,0.4)';
+    btn.style.borderColor = 'rgba(212,175,55,0.4)';
   }
 }
 
@@ -1999,7 +1999,7 @@ function cancelUserBooking(bookingId, bookingNumber) {
       if (!doc.exists) { Swal.fire('Not Found','Booking could not be found.','error'); return; }
       if (doc.data().uid !== user.uid) { Swal.fire('Denied','You can only cancel your own bookings.','error'); return; }
       db.collection('bookings').doc(bookingId).update({ status:'Cancelled', cancelledBy:'client' })
-        .then(() => Swal.fire({ title:'Cancelled', text:`Booking #${bookingNumber} cancelled.`, icon:'success', confirmButtonColor:'#2D9B6E', background:'#141414', color:'#E2E2E2' }))
+        .then(() => Swal.fire({ title:'Cancelled', text:`Booking #${bookingNumber} cancelled.`, icon:'success', confirmButtonColor:'#D4AF37', background:'#141414', color:'#E2E2E2' }))
         .catch(err => Swal.fire('Error','Failed: '+err.message,'error'));
     }).catch(err => Swal.fire('Error',err.message,'error'));
   });
