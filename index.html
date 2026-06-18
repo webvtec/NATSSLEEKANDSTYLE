@@ -824,7 +824,7 @@ input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.6); }
   <div class="gallery-hero">
     <p class="gallery-hero-eyebrow">Rexo Plaza, Shop #33 · Ocho Rios, Jamaica</p>
     <h1 class="gallery-hero-title">Where <em>Beauty</em><br>Meets Artistry</h1>
-    <p class="gallery-hero-sub">Premium braids, lashes, weaves & more.<br>Mon – Sat · 9:00 AM – 5:00 PM</p>
+    <p class="gallery-hero-sub">Premium braids, weaves & more.<br>Mon – Sat · 9:00 AM – 5:00 PM</p>
     <div class="hero-cta-row">
       <button class="btn-primary" onclick="switchTab('viewBook')">Book Now ✦</button>
       <a class="social-icon-btn" href="https://www.instagram.com/natssleekandstyle?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" aria-label="Instagram" title="Follow on Instagram">
@@ -1873,7 +1873,6 @@ async function submitBooking(e) {
           <p style="margin:4px 0;">⏰ ${time}${durLabel ? ' · ' + durLabel : ''}</p>
           <p style="margin:4px 0;">✦ ${service}</p>
           ${total ? `<p style="margin:4px 0; color:var(--champagne); font-weight:700;">💰 Total: $${total.toLocaleString()}</p>` : ''}
-          <p style="margin:8px 0 0; color:#f0ad4e; font-size:14px;">⚠️ A $2,000 deposit is required to confirm your slot.</p>
         </div>
         <button onclick="document.getElementById('bookingModal').classList.remove('open')" style="width:100%; padding:13px; background:linear-gradient(135deg,var(--emerald),var(--emerald2)); color:#fff; border:none; border-radius:12px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:700; font-size:15px; letter-spacing:2px; text-transform:uppercase;">Done ✦</button>
       </div>`;
